@@ -13,7 +13,8 @@ export default function Login() {
   const [registrando, setRegistrando] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
+  const [loginError, setLoginError] = useState(false);
+  const [registerError, setRegisterError] = useState(false);
 
   const handlerEmail = (e) => {
     setEmail(e.target.value);
@@ -30,6 +31,7 @@ export default function Login() {
           console.log(userCredential);
         })
         .catch((error) => {
+          setRegisterError(true);
           console.log(error);
         });
     } else {
@@ -38,7 +40,7 @@ export default function Login() {
           console.log(userCredential);
         })
         .catch((error) => {
-          setError(true);
+          setLoginError(true);
           console.log(error);
           throw new Error(error);
         });
@@ -59,7 +61,8 @@ export default function Login() {
                 className="estilo-profile"
               />
               <form onSubmit={handlerSubmit}>
-                {error && <div className="alert alert-danger">este correo ya esta en uso</div>}
+                {registerError && <div className="alert alert-danger">este correo ya esta en uso</div>}
+                {loginError && <div className="alert alert-danger">contraseña incorrecta o este correo incorrecto</div>}
                 <input
                   type="text"
                   id="email"
